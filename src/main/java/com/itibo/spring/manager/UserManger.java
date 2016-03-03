@@ -1,4 +1,4 @@
-package com.itibo.spring.manger;
+package com.itibo.spring.manager;
 
 import com.itibo.spring.dao.UserDAO;
 import com.itibo.spring.model.UserModel;
@@ -10,6 +10,7 @@ import javax.inject.Named;
  * Created by union on 03.03.2016.
  */
 
+@SuppressWarnings("ALL")
 @Named
 public class UserManger {
     @Inject

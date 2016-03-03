@@ -1,6 +1,6 @@
 package com.itibo.spring.controller;
 
-import com.itibo.spring.manger.UserManger;
+import com.itibo.spring.manager.UserManger;
 import com.itibo.spring.model.UserModel;
 
 import javax.faces.application.FacesMessage;
@@ -13,7 +13,7 @@ import javax.inject.Named;
  * Created by union on 03.03.2016.
  */
 
-@ManagedBean
+@ManagedBean(name = "userController")
 @Named
 public class UserController {
     @Inject
