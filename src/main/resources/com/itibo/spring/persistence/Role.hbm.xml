@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.itibo.spring.persistence.Role" table="ROLE">
+        <id name="roleId" type="int">
+            <column name="ROLE_ID"/>
+            <generator class="identity"/>
+        </id>
+        <property name="code" type="string">
+            <column name="CODE" length="60" not-null="true" unique="true"/>
+        </property>
+        <property name="label" type="string">
+            <column name="LABEL" length="100" not-null="true"/>
+        </property>
+        <many-to-one name="user" class="com.itibo.spring.persistence.User" fetch="select">
+            <column name="USER_ID" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
