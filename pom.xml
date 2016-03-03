@@ -12,7 +12,7 @@
     <url>https://github.com/UnionOne/JSFSHSecurity#jsfshsecurity</url>
 
     <properties>
-        <jsf.version>2.2.8</jsf.version>
+        <jsf.version>2.2.10</jsf.version>
         <spring.version>3.2.8.RELEASE</spring.version>
         <spring.security.version>3.2.5.RELEASE</spring.security.version>
         <hibernate.version>4.1.8.Final</hibernate.version>
@@ -20,7 +20,7 @@
     </properties>
 
     <dependencies>
-        <!-- JSF dependencies -->
+        <!-- JSF -->
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
@@ -31,20 +31,43 @@
             <artifactId>jsf-impl</artifactId>
             <version>${jsf.version}</version>
         </dependency>
+
+        <!-- JSTL -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
         <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.el</groupId>
+            <artifactId>el-ri</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.2.1-b03</version>
+            <version>2.1</version>
         </dependency>
 
         <!-- Spring Core -->

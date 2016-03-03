@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+<h2>Registration</h2>
+<a style="color: #FF0000" href="#{request.contextPath}/login.xhtml"> Login</a><br/><br/>
+<h:form>
+    <table>
+        <tr>
+            <td>UserName <h:outputLabel value="(*)" style="color:#F00707;"/></td>
+            <td>
+                <h:inputText value="#{userController.model.login}" required="true" label="Login"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Password <h:outputLabel value="(*)" style="color:#F00707;"/></td>
+            <td>
+                <h:inputSecret value="#{userController.model.pwd}" label="Password" redisplay="true" required="true">
+                    <f:validateLength maximum="100"/>
+                </h:inputSecret>
+            </td>
+            <td>Confirm Password <h:outputLabel value="(*)" style="color:#F00707;"/></td>
+            <td>
+                <h:inputSecret value="#{userController.model.pwdConfirm}" redisplay="true" label="ConfPassword"
+                               required="true">
+                    <f:validateLength maximum="100"/>
+                </h:inputSecret>
+            </td>
+        </tr>
+        <tr>
+            <td><h:commandButton value="Validate" action="#{userController.register}"/></td>
+            <td><h:commandButton type="reset" value="Reset"/></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td><h:messages id="messages"/></td>
+        </tr>
+    </table>
+</h:form>
+</body>
+</html>
