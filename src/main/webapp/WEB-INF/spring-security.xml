@@ -8,17 +8,23 @@
              http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/welcome.jsf" access="ROLE_USER"/>
         <form-login login-page="/login.jsf" default-target-url="/welcome.jsf"
                     authentication-failure-url="/login.jsf?status=error"/>
+        <intercept-url pattern="/welcome.jsf" access="ROLE_USER"/>
+        <intercept-url pattern="/admin*" access="ROLE_ADMIN"/>
         <logout logout-success-url="/login.jsf?status=logout"/>
     </http>
 
     <authentication-manager>
         <authentication-provider>
-            <jdbc-user-service data-source-ref="dataSource"
-                               users-by-username-query="SELECT LOGIN, PWD, ENABLED FROM user WHERE LOGIN = ?"
-                               authorities-by-username-query="select u.login, r.code from user u, role r where u.user_id = r.user_id and u.login = ? "/>
+            <!--<jdbc-user-service data-source-ref="dataSource"-->
+                               <!--users-by-username-query="SELECT LOGIN, PWD, ENABLED FROM user WHERE LOGIN = ?"-->
+                               <!--authorities-by-username-query="select u.login, r.code from user u, role r where-->
+                               <!--u.user_id = r.user_id and u.login = ? "/>-->
+            <user-service>
+                <user name="user" password="user" authorities="ROLE_USER" />
+                <user name="root" password="root" authorities="ROLE_USER, ROLE_ADMIN" />
+            </user-service>
         </authentication-provider>
     </authentication-manager>
 
