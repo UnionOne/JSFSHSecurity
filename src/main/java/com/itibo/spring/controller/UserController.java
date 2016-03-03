@@ -35,7 +35,7 @@ public class UserController {
     public String register() {
         try {
             if (!model.getPwd().equals(model.getPwdConfirm())) {
-                throw new Exception("Passes don't macht");
+                throw new Exception("Passes don't match");
             }
             userManger.addUser(model);
         } catch (Exception exc) {

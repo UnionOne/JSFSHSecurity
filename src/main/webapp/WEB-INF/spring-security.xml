@@ -8,10 +8,10 @@
              http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="welcome.xhtml" access="ROLE_USER"/>
-        <form-login login-page="login.xhtml" default-target-url="welcome.xhtml"
-                    authentication-failure-url="login.xhtml?status=error"/>
-        <logout logout-success-url="login.xhtml?status=logout"/>
+        <intercept-url pattern="/welcome.jsf" access="ROLE_USER"/>
+        <form-login login-page="/login.jsf" default-target-url="/welcome.jsf"
+                    authentication-failure-url="/login.jsf?status=error"/>
+        <logout logout-success-url="/login.jsf?status=logout"/>
     </http>
 
     <authentication-manager>
