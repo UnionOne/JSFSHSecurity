@@ -1,6 +1,6 @@
 package com.itibo.spring.controller;
 
-import com.itibo.spring.manager.UserManger;
+import com.itibo.spring.manager.UserManager;
 import com.itibo.spring.model.UserModel;
 
 import javax.faces.application.FacesMessage;
@@ -13,15 +13,16 @@ import javax.inject.Named;
  * Created by union on 03.03.2016.
  */
 
+@SuppressWarnings("ALL")
 @ManagedBean(name = "userController")
 @Named
 public class UserController {
     @Inject
-    public UserManger userManger;
+    public UserManager userManager;
     private UserModel model = new UserModel();
 
-    public void setUserManger(UserManger userManger) {
-        this.userManger = userManger;
+    public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
     }
 
     public UserModel getModel() {
@@ -37,7 +38,7 @@ public class UserController {
             if (!model.getPwd().equals(model.getPwdConfirm())) {
                 throw new Exception("Passes don't match");
             }
-            userManger.addUser(model);
+            userManager.addUser(model);
         } catch (Exception exc) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Failure, " + exc.getMessage(), ""));

@@ -8,12 +8,19 @@
       xmlns:c="http://java.sun.com/jstl/core">
 <body>
 
-    <h2>Login</h2>
-    <a style="color: #FF0000" href="#{request.contextPath}/register.xhtml"> Register</a><br/><br/>
+<h2>Login</h2>
+<a style="color: #FF0000" href="#{request.contextPath}/register.xhtml">Register</a><br/><br/>
 
 <form method="post" action="j_spring_security_check">
-    UserName <input type="text" name="j_username"/> <br/>
-    Password <input type="password" name="j_password"/> <br/>
+    <h:panelGrid columns="2">
+        <label for="name">User name</label>
+        <input id="name" type="text" name="j_username"/> <br/>
+
+
+        <label for="pass">Password</label>
+        <input id="pass" type="password" name="j_password"/> <br/>
+    </h:panelGrid>
+
     <input type="submit" value="Login"/>
 </form>
 

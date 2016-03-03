@@ -15,6 +15,7 @@ import java.util.Set;
  * Created by union on 03.03.2016.
  */
 
+@SuppressWarnings("ALL")
 @Named
 @Transactional("transactionManager")
 public class UserDAO {

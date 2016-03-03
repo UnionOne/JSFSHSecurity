@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 @SuppressWarnings("ALL")
 @Named
-public class UserManger {
+public class UserManager {
     @Inject
     public UserDAO userDAO;
 

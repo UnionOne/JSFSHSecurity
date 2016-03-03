@@ -9,38 +9,21 @@
 <h2>Registration</h2>
 <a style="color: #FF0000" href="#{request.contextPath}/login.xhtml"> Login</a><br/><br/>
 <h:form>
-    <table>
-        <tr>
-            <td>UserName <h:outputLabel value="(*)" style="color:#F00707;"/></td>
-            <td>
-                <h:inputText value="#{userController.model.login}" required="true" label="Login"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Password <h:outputLabel value="(*)" style="color:#F00707;"/></td>
-            <td>
-                <h:inputSecret value="#{userController.model.pwd}" label="Password" redisplay="true" required="true">
-                    <f:validateLength maximum="100"/>
-                </h:inputSecret>
-            </td>
-            <td>Confirm Password <h:outputLabel value="(*)" style="color:#F00707;"/></td>
-            <td>
-                <h:inputSecret value="#{userController.model.pwdConfirm}" redisplay="true" label="ConfPassword"
-                               required="true">
-                    <f:validateLength maximum="100"/>
-                </h:inputSecret>
-            </td>
-        </tr>
-        <tr>
-            <td><h:commandButton value="Validate" action="#{userController.register}"/></td>
-            <td><h:commandButton type="reset" value="Reset"/></td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <td><h:messages id="messages"/></td>
-        </tr>
-    </table>
+    <h:panelGrid columns="2">
+        <h:outputLabel value="UserName"/>
+        <h:inputText value="#{userController.model.login}" required="true" label="Login"/>
+
+        <h:outputLabel value="Password"/>
+        <h:inputSecret value="#{userController.model.pwd}" redisplay="true" required="true"/>
+
+        <h:outputLabel value="Confirm Password"/>
+        <h:inputSecret value="#{userController.model.pwdConfirm}" redisplay="true" required="true"/>
+    </h:panelGrid>
+
+    <h:commandButton value="Validate" action="#{userController.register}"/>
+    <h:commandButton type="reset" value="Reset"/>
+
+    <h:messages id="messages"/>
 </h:form>
 </body>
 </html>
