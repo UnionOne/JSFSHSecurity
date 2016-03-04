@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <mapping resource="com/itibo/spring/persistence/User.hbm.xml"/>
-        <mapping resource="com/itibo/spring/persistence/Role.hbm.xml"/>
+        <mapping class="com.itibo.spring.persistence.User"/>
+        <mapping class="com.itibo.spring.persistence.Role"/>
     </session-factory>
 </hibernate-configuration>

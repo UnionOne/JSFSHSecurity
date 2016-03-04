@@ -1,13 +1,26 @@
 package com.itibo.spring.persistence;
 
+import javax.persistence.*;
+
 /**
  * Created by union on 03.03.2016.
  */
 
+@Entity
+@Table(name = "ROLE")
 public class Role {
+    @Id
+    @Column(name = "role_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roleId;
+
+    @Column(name = "code")
     private String code;
+
+    @Column(name = "label")
     private String label;
+
+    @Column(name = "user_id")
     private User user;
 
     public int getRoleId() {
