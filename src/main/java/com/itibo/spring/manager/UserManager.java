@@ -2,20 +2,18 @@ package com.itibo.spring.manager;
 
 import com.itibo.spring.dao.UserDAO;
 import com.itibo.spring.model.UserModel;
-
-import javax.inject.Inject;
-import javax.inject.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by union on 03.03.2016.
  */
 
-@SuppressWarnings("ALL")
-@Named
+@Component
 public class UserManager {
-    @Inject
     public UserDAO userDAO;
 
+    @Autowired
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }

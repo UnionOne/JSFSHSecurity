@@ -7,18 +7,10 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "role")
+@Table(name = "role", schema = "security")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
     private Integer roleId;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
-
-    @Column(name = "code")
     private String code;
 
     public Role() {
@@ -29,6 +21,9 @@ public class Role {
         this.code = code;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
     public Integer getRoleId() {
         return roleId;
     }
@@ -37,6 +32,8 @@ public class Role {
         this.roleId = roleId;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     public User getUser() {
         return user;
     }
@@ -45,6 +42,8 @@ public class Role {
         this.user = user;
     }
 
+    @Basic
+    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -72,14 +71,5 @@ public class Role {
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "roleId=" + roleId +
-                ", user=" + user +
-                ", code='" + code + '\'' +
-                '}';
     }
 }

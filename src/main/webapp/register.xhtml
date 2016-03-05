@@ -14,10 +14,10 @@
         <h:inputText value="#{userController.model.login}" required="true" label="Login"/>
 
         <h:outputLabel value="Password"/>
-        <h:inputSecret value="#{userController.model.pwd}" redisplay="true" required="true"/>
+        <h:inputSecret value="#{userController.model.password}" redisplay="true" required="true"/>
 
         <h:outputLabel value="Confirm Password"/>
-        <h:inputSecret value="#{userController.model.pwdConfirm}" redisplay="true" required="true"/>
+        <h:inputSecret value="#{userController.model.passwordConfirm}" redisplay="true" required="true"/>
     </h:panelGrid>
 
     <h:commandButton value="Validate" action="#{userController.register}"/>

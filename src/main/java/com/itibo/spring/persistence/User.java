@@ -8,30 +8,25 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "security")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Integer userId;
-
-    @Column(name = "login")
     private String login;
-
-    @Column(name = "password")
     private String password;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Role> roles;
 
     public User() {
     }
 
-    public User(String login, String password) {
+    public User(String login, String password, List<Role> roles) {
         this.login = login;
         this.password = password;
+        this.roles = roles;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     public Integer getUserId() {
         return userId;
     }
@@ -40,6 +35,8 @@ public class User {
         this.userId = userId;
     }
 
+    @Basic
+    @Column(name = "login")
     public String getLogin() {
         return login;
     }
@@ -48,6 +45,8 @@ public class User {
         this.login = login;
     }
 
+    @Basic
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -56,6 +55,7 @@ public class User {
         this.password = password;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     public List<Role> getRoles() {
         return roles;
     }
@@ -85,15 +85,5 @@ public class User {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
     }
 }

@@ -64,7 +64,7 @@
     <!-- context-param -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring-hibernate.xml, /WEB-INF/spring-security.xml</param-value>
+        <param-value>classpath:spring-hibernate.xml, classpath:spring-security.xml</param-value>
     </context-param>
 
 </web-app>

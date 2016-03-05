@@ -6,13 +6,29 @@ package com.itibo.spring.model;
 
 public class UserModel {
     private String login;
-    private String pwd;
-    private String pwdConfirm;
+    private String password;
+    private String passwordConfirm;
 
     public void reset() {
         this.login = null;
-        this.pwd = null;
-        this.pwdConfirm = null;
+        this.password = null;
+        this.passwordConfirm = null;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getLogin() {
@@ -21,21 +37,5 @@ public class UserModel {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public String getPwdConfirm() {
-        return pwdConfirm;
-    }
-
-    public void setPwdConfirm(String pwdConfirm) {
-        this.pwdConfirm = pwdConfirm;
     }
 }
