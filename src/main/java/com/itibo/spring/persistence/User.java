@@ -1,45 +1,42 @@
 package com.itibo.spring.persistence;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by union on 03.03.2016.
  */
 
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User {
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    @Column(name = "user_id")
+    private Integer userId;
 
     @Column(name = "login")
     private String login;
 
-    @Column(name = "pwd")
-    private String pwd;
+    @Column(name = "password")
+    private String password;
 
-    @Column(name = "enabled")
-    private Integer enabled;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Role> roles;
 
-    @OneToMany(mappedBy = "role_id")
-    private Set<Role> roles = new HashSet<>(0);
-
-    public User(String login, String pwd, Integer enabled, Set<Role> roles) {
-        this.login = login;
-        this.pwd = pwd;
-        this.enabled = enabled;
-        this.roles = roles;
+    public User() {
     }
 
-    public int getUserId() {
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -51,27 +48,52 @@ public class User {
         this.login = login;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        return roles != null ? roles.equals(user.roles) : user.roles == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userId != null ? userId.hashCode() : 0;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }
