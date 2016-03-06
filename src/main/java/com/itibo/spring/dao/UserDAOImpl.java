@@ -1,8 +1,8 @@
 package com.itibo.spring.dao;
 
 import com.itibo.spring.model.UserModel;
-import com.itibo.spring.persistence.Role;
-import com.itibo.spring.persistence.User;
+import com.itibo.spring.model.Role;
+import com.itibo.spring.model.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
