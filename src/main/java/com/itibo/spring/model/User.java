@@ -1,5 +1,6 @@
 package com.itibo.spring.model;
 
+import javax.faces.bean.ManagedBean;
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,11 +10,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
+@ManagedBean(name = "user")
 public class User {
     private Integer userId;
     private String login;
     private String password;
-    private List<Role> roles;
+    //private List<Role> roles;
 
     public User() {
     }
@@ -21,7 +23,7 @@ public class User {
     public User(String login, String password, List<Role> roles) {
         this.login = login;
         this.password = password;
-        this.roles = roles;
+        //this.roles = roles;
     }
 
     @Id
@@ -55,12 +57,12 @@ public class User {
         this.password = password;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+//    public List<Role> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(List<Role> roles) {
+//        this.roles = roles;
+//    }
 }

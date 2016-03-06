@@ -21,7 +21,7 @@
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving
         up static resources in the ${webappRoot}/resources directory -->
-    <resources mapping="/resources/**" location="/resources/"/>
+    <!--<resources mapping="/resources/**" location="/resources/"/>-->
 
     <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -42,7 +42,6 @@
         </beans:property>
     </beans:bean>
 
-    <!-- TODO DAO AND SERVICE -->
     <beans:bean id="userDao" class="com.itibo.spring.dao.UserDaoImpl">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </beans:bean>
