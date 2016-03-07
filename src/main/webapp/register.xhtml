@@ -5,10 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-    <title>JSF Spring Hibernate Integration</title>
-    <h:outputStylesheet library="css" name="style.css"/>
-</h:head>
+<!--<h:head>-->
+    <!--<title>JSF Spring Hibernate Integration</title>-->
+    <!--<h:outputStylesheet library="css" name="style.css"/>-->
+<!--</h:head>-->
 <body>
 <h2>Registration</h2>
 <!--<a style="color: #FF0000" href="#{request.contextPath}/login.xhtml"> Login</a><br/><br/>-->
@@ -30,47 +30,47 @@
     <!--<h:messages id="messages"/>-->
 <!--</h:form>-->
 
-<h1>Add a Person</h1>
-<h:form>
-    <table>
-        <tr>
-            <td><label>Login</label></td>
-            <td><h:inputText id="login" value="#{user.login}"/>
-            </td>
-        </tr>
-        <tr>
-            <td><label>Name</label></td>
-            <td><h:inputText id="password" value="#{user.password}"/>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2"><h:commandButton action="#{userService.addUser(user)}" value="Add User"/>
-            </td>
-        </tr>
+<!--<h1>Add a Person</h1>-->
+<!--<h:form>-->
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<td><label>Login</label></td>-->
+            <!--<td><h:inputText id="login" value="#{user.login}"/>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td><label>Name</label></td>-->
+            <!--<td><h:inputText id="password" value="#{user.password}"/>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td colspan="2"><h:commandButton action="#{userService.addUser(user)}" value="Add User"/>-->
+            <!--</td>-->
+        <!--</tr>-->
 
-    </table>
+    <!--</table>-->
 
-</h:form>
+<!--</h:form>-->
 
-<br/>
-<h3>Users List</h3>
+<!--<br/>-->
+<!--<h3>Users List</h3>-->
 
-<table class="tg">
-    <tr>
-        <th width="80">User ID</th>
-        <th width="120">User Login</th>
-        <th width="80">Delete</th>
-    </tr>
-    <ui:repeat value="#{userService.listUsers()}" var="user">
-        <h:form>
-            <tr>
-                <td>#{user.login}</td>
-                <td>#{user.password}</td>
-                <td><h:commandButton value="Delete" action="#{userService.deleteUser(user)}"/></td>
-            </tr>
-        </h:form>
-    </ui:repeat>
-</table>
+<!--<table class="tg">-->
+    <!--<tr>-->
+        <!--<th width="80">User ID</th>-->
+        <!--<th width="120">User Login</th>-->
+        <!--<th width="80">Delete</th>-->
+    <!--</tr>-->
+    <!--<ui:repeat value="#{userService.listUsers()}" var="user">-->
+        <!--<h:form>-->
+            <!--<tr>-->
+                <!--<td>#{user.login}</td>-->
+                <!--<td>#{user.password}</td>-->
+                <!--<td><h:commandButton value="Delete" action="#{userService.deleteUser(user)}"/></td>-->
+            <!--</tr>-->
+        <!--</h:form>-->
+    <!--</ui:repeat>-->
+<!--</table>-->
 
 </body>
 </html>
