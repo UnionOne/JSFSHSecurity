@@ -15,15 +15,13 @@ public class User {
     private Integer userId;
     private String login;
     private String password;
-    //private List<Role> roles;
 
     public User() {
     }
 
-    public User(String login, String password, List<Role> roles) {
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
-        //this.roles = roles;
     }
 
     @Id
@@ -56,13 +54,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    public List<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(List<Role> roles) {
-//        this.roles = roles;
-//    }
 }

@@ -21,7 +21,7 @@
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving
         up static resources in the ${webappRoot}/resources directory -->
-    <!--<resources mapping="/resources/**" location="/resources/"/>-->
+    <resources mapping="/resources/**" location="/resources/"/>
 
     <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
