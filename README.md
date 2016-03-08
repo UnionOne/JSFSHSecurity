@@ -1,5 +1,5 @@
 ##JSF 2 + Spring 3 + Spring Secutity + Hibernate integration
-(Если конб умер, слезь с него)
+(Если конь умер, слезь с него)
 
 ###First of all add dependencies to pom.xml:
 [pom.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/pom.xml#L16-L19)
