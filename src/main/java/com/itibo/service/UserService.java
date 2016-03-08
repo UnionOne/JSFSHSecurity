@@ -1,6 +1,6 @@
-package com.itibo.spring.dao;
+package com.itibo.service;
 
-import com.itibo.spring.model.User;
+import com.itibo.model.User;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by union on 07.03.2016.
  */
 
-public interface UserDao {
+public interface UserService {
     void addUser(User user);
 
     void deleteUser(User user);

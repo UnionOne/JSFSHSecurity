@@ -1,7 +1,7 @@
-package com.itibo.spring.service;
+package com.itibo.service;
 
-import com.itibo.spring.dao.UserDao;
-import com.itibo.spring.model.User;
+import com.itibo.dao.UserDao;
+import com.itibo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

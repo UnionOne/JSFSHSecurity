@@ -1,7 +1,7 @@
-package com.itibo.spring.dao;
+package com.itibo.dao;
 
-import com.itibo.spring.model.Role;
-import com.itibo.spring.model.User;
+import com.itibo.model.Role;
+import com.itibo.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;

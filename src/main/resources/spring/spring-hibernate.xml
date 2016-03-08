@@ -43,10 +43,10 @@
         </beans:property>
     </beans:bean>
 
-    <beans:bean id="userDao" class="com.itibo.spring.dao.UserDaoImpl">
+    <beans:bean id="userDao" class="com.itibo.dao.UserDaoImpl">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </beans:bean>
-    <beans:bean id="userService" class="com.itibo.spring.service.UserServiceImpl">
+    <beans:bean id="userService" class="com.itibo.service.UserServiceImpl">
         <beans:property name="userDao" ref="userDao"/>
     </beans:bean>
 
