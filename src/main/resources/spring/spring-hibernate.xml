@@ -43,7 +43,7 @@
         </beans:property>
     </beans:bean>
 
-    <beans:bean id="userDao" class="com.itibo.dao.UserDAO">
+    <beans:bean id="userDao" class="com.itibo.dao.UserDAOImpl">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </beans:bean>
     <beans:bean id="userService" class="com.itibo.service.UserServiceImpl">

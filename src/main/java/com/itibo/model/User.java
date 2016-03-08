@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-//@ManagedBean(name = "user")
+@ManagedBean(name = "user")
 public class User {
     @Id
     @GeneratedValue

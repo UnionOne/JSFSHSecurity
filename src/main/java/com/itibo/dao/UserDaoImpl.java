@@ -1,5 +1,6 @@
 package com.itibo.dao;
 
+import com.itibo.model.Role;
 import com.itibo.model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,17 +24,17 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    private Session openSession() {
-        return sessionFactory.getCurrentSession();
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
-
-//    public void setSessionFactory(SessionFactory sessionFactory) {
-//        this.sessionFactory = sessionFactory;
-//    }
 
     @Override
     public void addUser(User user) {
         Session session = this.sessionFactory.getCurrentSession();
+        session.persist(user);
+        Role role = new Role();
+        role.setRole("user");
+        user.setRole(role);
         session.persist(user);
         logger.info("User saved successfully, User details: " + user.toString());
     }
@@ -47,8 +48,9 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     public User getUserByLogin(String login) {
-        List<User> userList = new LinkedList<User>();
-        Query query = openSession().createQuery("from User u where u.login = :login");
+        Session session = this.sessionFactory.getCurrentSession();
+        List<User> userList = new LinkedList<>();
+        Query query = session.createQuery("from User u where u.login = :login");
         query.setParameter("login", login);
         userList = query.list();
         if (userList.size() > 0) {

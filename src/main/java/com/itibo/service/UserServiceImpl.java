@@ -16,15 +16,15 @@ import java.util.List;
 
 @Service
 @Transactional
-//@ManagedBean(name = "userService")
-//@SessionScoped
+@ManagedBean(name = "userService")
+@SessionScoped
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDao;
 
-//    public void setUserDao(UserDAO userDao) {
-//        this.userDao = userDao;
-//    }
+    public void setUserDao(UserDAO userDao) {
+        this.userDao = userDao;
+    }
 
     public void addUser(User user) {
         this.userDao.addUser(user);
