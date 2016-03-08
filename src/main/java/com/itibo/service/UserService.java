@@ -9,9 +9,11 @@ import java.util.List;
  */
 
 public interface UserService {
-    void addUser(User user);
+    public void addUser(User user);
 
-    void deleteUser(User user);
+    public void deleteUser(User user);
 
-    List<User> listUsers();
+    public User getUserByLogin(String login);
+
+    public List<User> listUsers();
 }

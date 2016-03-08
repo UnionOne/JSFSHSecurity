@@ -1,7 +1,7 @@
 package com.itibo.dao;
 
-import com.itibo.model.Role;
 import com.itibo.model.User;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -9,31 +9,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by union on 07.03.2016.
  */
 
 @Repository
-public class UserDaoImpl implements UserDao {
-    private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
-
-    private SessionFactory sessionFactory;
+public class UserDAOImpl implements UserDAO {
+    private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
 
     @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    private SessionFactory sessionFactory;
+
+    private Session openSession() {
+        return sessionFactory.getCurrentSession();
     }
+
+//    public void setSessionFactory(SessionFactory sessionFactory) {
+//        this.sessionFactory = sessionFactory;
+//    }
 
     @Override
     public void addUser(User user) {
         Session session = this.sessionFactory.getCurrentSession();
-        Set<Role> roles = new HashSet<>();
-        roles.add(new Role("USER_ROLE"));
-        user.setUserRoles(roles);
         session.persist(user);
         logger.info("User saved successfully, User details: " + user.toString());
     }
@@ -43,6 +43,19 @@ public class UserDaoImpl implements UserDao {
         Session session = this.sessionFactory.getCurrentSession();
         session.delete(user);
         logger.info("User delete successfully, User details: " + user.toString());
+    }
+
+    @SuppressWarnings("unchecked")
+    public User getUserByLogin(String login) {
+        List<User> userList = new LinkedList<User>();
+        Query query = openSession().createQuery("from User u where u.login = :login");
+        query.setParameter("login", login);
+        userList = query.list();
+        if (userList.size() > 0) {
+            return userList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -1,6 +1,6 @@
 package com.itibo.service;
 
-import com.itibo.dao.UserDao;
+import com.itibo.dao.UserDAO;
 import com.itibo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,30 +15,29 @@ import java.util.List;
  */
 
 @Service
-@ManagedBean(name = "userService")
-@SessionScoped
+@Transactional
+//@ManagedBean(name = "userService")
+//@SessionScoped
 public class UserServiceImpl implements UserService {
-    private UserDao userDao;
-
     @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private UserDAO userDao;
 
-    @Override
-    @Transactional
+//    public void setUserDao(UserDAO userDao) {
+//        this.userDao = userDao;
+//    }
+
     public void addUser(User user) {
         this.userDao.addUser(user);
     }
 
-    @Override
-    @Transactional
     public void deleteUser(User user) {
         this.userDao.deleteUser(user);
     }
 
-    @Override
-    @Transactional
+    public User getUserByLogin(String login) {
+        return userDao.getUserByLogin(login);
+    }
+
     public List<User> listUsers() {
         return this.userDao.listUsers();
     }
