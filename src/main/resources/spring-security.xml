@@ -1,0 +1,25 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http auto-config="true">
+        <intercept-url pattern="/pages/admin.xhtml" access="ROLE_ADMIN"/>
+        <form-login login-page="/pages/login.xhtml"
+                    default-target-url="/pages/admin.xhtml"
+                    authentication-failure-url="/pages/loginfailed.xhtml" />
+        <logout logout-success-url="/pages/login.xhtml" />
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="test1" password="1" authorities="ROLE_USER" />
+                <user name="test" password="2" authorities="ROLE_ADMIN" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>
