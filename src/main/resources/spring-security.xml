@@ -10,15 +10,15 @@
         <intercept-url pattern="/pages/admin.xhtml" access="ROLE_ADMIN"/>
         <form-login login-page="/pages/login.xhtml"
                     default-target-url="/pages/admin.xhtml"
-                    authentication-failure-url="/pages/loginfailed.xhtml" />
-        <logout logout-success-url="/pages/login.xhtml" />
+                    authentication-failure-url="/pages/login.xhtml?error"/>
+        <logout logout-success-url="/pages/login.xhtml"/>
     </http>
 
     <authentication-manager>
         <authentication-provider>
             <user-service>
-                <user name="test1" password="1" authorities="ROLE_USER" />
-                <user name="test" password="2" authorities="ROLE_ADMIN" />
+                <user name="user" password="user" authorities="ROLE_USER"/>
+                <user name="admin" password="admin" authorities="ROLE_ADMIN"/>
             </user-service>
         </authentication-provider>
     </authentication-manager>
