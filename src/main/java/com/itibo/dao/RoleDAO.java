@@ -7,5 +7,5 @@ import com.itibo.model.Role;
  */
 
 public interface RoleDAO {
-    public Role getRoleById(int id);
+    Role getRoleById(int id);
 }
