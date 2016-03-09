@@ -7,9 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 // TODO Generic DAO for models
 
@@ -25,11 +23,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addUser(User user) {
         Session session = this.sessionFactory.getCurrentSession();
-        //Set<Role> roles = new HashSet<>();
-        //Role role = new Role();
-        //role.setRole("ROLE_ADMIN");
-        //roles.add(role);
-        //user.setRoles(roles);
+        user.setRole(new Role("user"));
         session.persist(user);
     }
 

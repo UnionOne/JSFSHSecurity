@@ -1,30 +1,29 @@
 package com.itibo.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
+    @GeneratedValue
     private Integer id;
+
     private String role;
-    //@ManyToOne
-    //@JoinColumn(name = "user_id")
-    //private User user;
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="user_roles",
+            joinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")}
+    )
+    private Set<User> userRoles;
 
     public Role() {
-
     }
 
-//    public Role(String role) {
-//        this.role = role;
-//    }
-
-    public Role(String role /*User user*/) {
+    public Role(String role) {
         this.role = role;
-        //this.user = user;
     }
 
     public Integer getId() {
@@ -43,11 +42,11 @@ public class Role {
         this.role = role;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public Set<User> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<User> userRoles) {
+        this.userRoles = userRoles;
+    }
 }

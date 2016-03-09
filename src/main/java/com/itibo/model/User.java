@@ -1,10 +1,7 @@
 package com.itibo.model;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -13,8 +10,17 @@ public class User {
     @Id
     @GeneratedValue
     private Integer id;
+
     private String login;
+
     private String password;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinTable(name="user_roles",
+            joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")}
+    )
+    private Role role;
 
     public Integer getId() {
         return id;
@@ -38,5 +44,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
