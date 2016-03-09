@@ -7,27 +7,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @ManagedBean(name = "userModel")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @GeneratedValue
     private Integer id;
     private String login;
     private String password;
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    //private Set<Role> roles = new HashSet<>();
-
-    public User() {
-
-    }
-
-    public User(String login, String password /*Set<Role> roles*/) {
-        this.login = login;
-        this.password = password;
-        //this.roles = roles;
-    }
 
     public Integer getId() {
         return id;
@@ -52,12 +39,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
 }

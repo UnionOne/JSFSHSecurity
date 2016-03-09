@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// TODO Generic DAO for models
+
 @Repository
 public class UserDAOImpl implements UserDAO {
     @Autowired

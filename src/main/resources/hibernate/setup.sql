@@ -1,15 +1,19 @@
-CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  PRIMARY KEY (`user_id`)
+CREATE TABLE `users` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `login` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `role` varchar(45) NOT NULL,
-  PRIMARY KEY (`role_id`),
-  KEY `fk_article_user_idx` (`user_id`),
-  CONSTRAINT `fk_article_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `roles` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `role` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_roles` (
+  `user_id` int(6) NOT NULL,
+  `role_id` int(6) NOT NULL,
+  KEY `user` (`user_id`),
+  KEY `role` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
