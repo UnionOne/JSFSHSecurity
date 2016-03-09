@@ -10,17 +10,21 @@ public class Role {
     @Column(name = "role_id")
     private Integer id;
     private String role;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    //@ManyToOne
+    //@JoinColumn(name = "user_id")
+    //private User user;
 
     public Role() {
 
     }
 
-    public Role(String role, User user) {
+//    public Role(String role) {
+//        this.role = role;
+//    }
+
+    public Role(String role /*User user*/) {
         this.role = role;
-        this.user = user;
+        //this.user = user;
     }
 
     public Integer getId() {
@@ -39,11 +43,11 @@ public class Role {
         this.role = role;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }

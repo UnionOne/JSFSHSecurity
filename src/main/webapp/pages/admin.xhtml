@@ -8,6 +8,7 @@
 
 <h:head>
     <title>Authentication</title>
+    <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 
 <f:view styleClass="form">
@@ -16,12 +17,54 @@
             <div>
                 <h:outputText value="Spring Security"/>
             </div>
-
             <div>
                 <h:outputText value="Admin Page"/>
                 <a href="${pageContext.request.contextPath}/j_spring_security_logout">Logout</a>
             </div>
         </div>
     </h:form>
+
+    <h1>Add a User</h1>
+    <h:form>
+        <table>
+            <tr>
+                <td><label>Login</label></td>
+                <td><h:inputText id="name" value="#{userModel.login}"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Password</label></td>
+                <td><h:inputText id="country" value="#{userModel.password}"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><h:commandButton action="#{userService.addUser(userModel)}" value="Add Person"/>
+                </td>
+            </tr>
+
+        </table>
+
+    </h:form>
+
+    <br/>
+    <h3>Persons List</h3>
+
+    <table class="tg">
+        <tr>
+            <th width="120">User Login</th>
+            <th width="120">User Password</th>
+            <th width="80">Delete</th>
+        </tr>
+        <ui:repeat value="#{userService.getAllUsers()}" var="user">
+            <h:form>
+                <tr>
+                    <td>#{user.login}</td>
+                    <td>#{user.password}</td>
+                    <td><h:commandButton value="Delete" action="#{userService.deleteUser(user)}"/></td>
+                </tr>
+            </h:form>
+        </ui:repeat>
+    </table>
+
 </f:view>
 </html>
