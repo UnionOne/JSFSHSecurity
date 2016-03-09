@@ -12,7 +12,7 @@
     <url>https://github.com/UnionOne/JSFSHSecurity#jsfshsecurity</url>
 
     <properties>
-        <spring.version>3.2.8.RELEASE</spring.version>
+        <spring.version>4.0.3.RELEASE</spring.version>
         <spring.security.version>3.2.5.RELEASE</spring.security.version>
         <hibernate.version>4.3.5.Final</hibernate.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

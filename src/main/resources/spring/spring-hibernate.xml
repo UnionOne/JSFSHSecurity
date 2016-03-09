@@ -23,6 +23,22 @@
         up static resources in the ${webappRoot}/resources directory -->
     <!--<resources mapping="/resources/**" location="/resources/"/>-->
 
+    <context:component-scan base-package="com.itibo.*"/>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </beans:bean>
+
+    <beans:bean id="userDAO" class="com.itibo.dao.UserDAOImpl">
+        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </beans:bean>
+
+    <beans:bean id="userService" class="com.itibo.service.UserServiceImpl">
+        <beans:property name="userDAO" ref="userDAO"/>
+    </beans:bean>
+
     <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <beans:property name="url" value="jdbc:mysql://127.0.0.2:3306/security"/>

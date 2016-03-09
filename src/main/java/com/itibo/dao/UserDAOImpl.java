@@ -13,6 +13,10 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+
+    }
+
     @Override
     public void addUser(User user) {
         Session session = sessionFactory.getCurrentSession();
