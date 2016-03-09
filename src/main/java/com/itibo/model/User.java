@@ -1,29 +1,37 @@
 package com.itibo.model;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Integer id;
     private String login;
     private String password;
-    private boolean enabled;
-    private Set<UserRole> userRole = new HashSet<>(0);
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
 
     }
 
-    public User(String login, String password, boolean enabled) {
+    public User(String login, String password, Set<Role> roles) {
         this.login = login;
         this.password = password;
-        this.enabled = enabled;
+        this.roles = roles;
     }
 
-    public User(String login, String password, boolean enabled, Set<UserRole> userRole) {
-        this.login = login;
-        this.password = password;
-        this.enabled = enabled;
-        this.userRole = userRole;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -42,19 +50,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Set<UserRole> getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(Set<UserRole> userRole) {
-        this.userRole = userRole;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
