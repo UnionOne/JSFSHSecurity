@@ -90,7 +90,7 @@
 ###Create new tables in some schema:
 [setup.sql](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/hibernate/setup.sql)
 ```sql
-  CREATE TABLE `users` (
+CREATE TABLE `users` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   `login` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
@@ -109,6 +109,12 @@ CREATE TABLE `user_roles` (
   KEY `user` (`user_id`),
   KEY `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO roles (role) VALUES ('ROLE_ADMIN'), ('ROLE_USER');
+
+INSERT INTO users (login, password) VALUES ('user', 'user'), ('admin', 'admin');
+
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 2), (2, 1);
 ```
 
 ###Create hibernate.cfg.xml to mapping all entities:

@@ -15,11 +15,6 @@
     </http>
 
     <authentication-manager>
-        <authentication-provider user-service-ref="customUserDetailsService">
-            <!--<user-service>-->
-                <!--<user name="user" password="user" authorities="ROLE_USER"/>-->
-                <!--<user name="admin" password="admin" authorities="ROLE_ADMIN"/>-->
-            <!--</user-service>-->
-        </authentication-provider>
+        <authentication-provider user-service-ref="customUserDetailsService"/>
     </authentication-manager>
 </beans:beans>

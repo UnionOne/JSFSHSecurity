@@ -18,7 +18,7 @@ CREATE TABLE `user_roles` (
   KEY `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO roles (role) VALUES ('admin'), ('user');
+INSERT INTO roles (role) VALUES ('ROLE_ADMIN'), ('ROLE_USER');
 
 INSERT INTO users (login, password) VALUES ('user', 'user'), ('admin', 'admin');
 

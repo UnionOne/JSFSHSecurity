@@ -26,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addUser(User user) {
         Session session = this.sessionFactory.getCurrentSession();
-        user.setRole(new Role("user"));
+        user.setRole(new Role("ROLE_USER"));
         session.persist(user);
     }
 
