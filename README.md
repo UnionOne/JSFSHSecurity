@@ -1,23 +1,48 @@
-##JSF 2 + Spring 3 + Spring Secutity + Hibernate integration
-(Если конь умер, слезь с него)
-(Попробуй оживить. Или все таки слезь)
+##JSF 2 + Spring 4 + Spring Secutity 3 + Hibernate 4 integration
 
 ###First of all add dependencies to pom.xml:
-[pom.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/pom.xml#L16-L19)
+[pom.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/pom.xml)
 ```xml
         ...
     <properties>
-        <jsf.version>2.2.10</jsf.version>
-        <spring.version>3.2.8.RELEASE</spring.version>
+        <spring.version>4.0.3.RELEASE</spring.version>
         <spring.security.version>3.2.5.RELEASE</spring.security.version>
-        <hibernate.version>4.1.8.Final</hibernate.version>
-        <mysql.driver.version>5.1.3</mysql.driver.version>
+        <hibernate.version>4.3.5.Final</hibernate.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
         ...
 ```
 
-###Then add some lines to faces-config.xml:
-[faces-config.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/webapp/WEB-INF/faces-config.xml#L7-L11)
+###Add listener, filter and context-param to web.xml:
+[web.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/webapp/WEB-INF/web.xml)
+```xml
+      ...
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/spring-security.xml classpath:spring/spring-hibernate.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+      ...
+```
+
+###Then add el-resolver to faces-config.xml:
+[faces-config.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/webapp/WEB-INF/faces-config.xml)
 ```xml
     <application>
         <el-resolver>
@@ -26,160 +51,170 @@
     </application>
 ```
 
-###Configure saint spring-hibernate.xml in WEB-INF folder:
-[spring-hibernate.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/webapp/WEB-INF/spring-hibernate.xml#L13-L30)
+###Configure saint spring-hibernate.xml in resources folder:
+[spring-hibernate.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/spring/spring-hibernate.xml)
 ```xml
       ...
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.DB2Dialect</prop>
-                <prop key="hibernate.format_sql">true</prop>
-            </props>
-        </property>
-    </bean>
+    <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </beans:bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <beans:bean id="userDAO" class="com.itibo.dao.UserDAOImpl">
+        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </beans:bean>
+
+    <beans:bean id="userService" class="com.itibo.service.UserServiceImpl">
+        <beans:property name="userDAO" ref="userDAO"/>
+    </beans:bean>
       ...
 ```
 
-###Configure saint spring-security.xml in WEB-INF folder:
-[spring-security.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/webapp/WEB-INF/spring-security.xml#L10-L16)
+###Configure saint spring-security.xml in resources folder:
+[spring-security.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/spring/spring-security.xml)
 ```xml
       ...
     <http auto-config="true">
-        <form-login login-page="/login.jsf" default-target-url="/welcome.jsf"
-                    authentication-failure-url="/login.jsf?status=error"/>
-        <intercept-url pattern="/welcome.jsf" access="ROLE_USER"/>
-        <intercept-url pattern="/admin*" access="ROLE_ADMIN"/>
-        <logout logout-success-url="/login.jsf?status=logout"/>
+        <intercept-url pattern="/pages/admin.xhtml" access="ROLE_ADMIN"/>
+        <form-login login-page="/pages/login.xhtml"
+                    default-target-url="/pages/admin.xhtml"
+                    authentication-failure-url="/pages/login.xhtml?error"/>
+        <logout logout-success-url="/pages/login.xhtml"/>
     </http>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="customUserDetailsService"/>
+    </authentication-manager>
      ...
 ```
 
-###Add listener and context-param to web.xml:
-[web.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/webapp/WEB-INF/web.xml#L56-L68)
-```xml
-      ...
-    <!-- Add Support for Spring -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-    </listener>
-
-    <!-- context-param -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring-hibernate.xml, /WEB-INF/spring-security.xml</param-value>
-    </context-param>
-      ...
-```
-
 ###Create new tables in some schema:
-[setup.sql](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/setup.sql#L1-L16)
+[setup.sql](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/hibernate/setup.sql)
 ```sql
-  CREATE TABLE USER (
-  USER_ID int(10) NOT NULL AUTO_INCREMENT,
-  LOGIN varchar(50) NOT NULL,
-  PWD varchar(100) NOT NULL,
-  ENABLED tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (USER_ID)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
- 
-CREATE TABLE ROLE (
-  ROLE_ID int(10) NOT NULL AUTO_INCREMENT,
-  USER_ID int(10) DEFAULT NULL,
-  CODE varchar(60) NOT NULL,
-  LABEL varchar(100) NOT NULL,
-  PRIMARY KEY (ROLE_ID),
-  CONSTRAINT FK_USROLE FOREIGN KEY (USER_ID) REFERENCES USER (USER_ID)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+  CREATE TABLE `users` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `login` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `roles` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `role` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_roles` (
+  `user_id` int(6) NOT NULL,
+  `role_id` int(6) NOT NULL,
+  KEY `user` (`user_id`),
+  KEY `role` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-###Create hibernate config to all entities:
-[User.hbm.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/com/itibo/spring/persistence/User.hbm.xml#L5-L27)
+###Create hibernate.cfg.xml to mapping all entities:
+[hibernate.cfg.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/hibernate/hibernate.cfg.xml)
 ```xml
         ...
-        <property name="login" type="string">
-            <column name="LOGIN" length="50" not-null="true"/>
-        </property>
-        <property name="pwd" type="string">
-            <column name="PWD" length="100" not-null="true"/>
-        </property>
-        <property name="enabled" type="java.lang.Integer">
-            <column name="ENABLED"/>
-        </property>
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="com.itibo.model.User"/>
+        <mapping class="com.itibo.model.Role"/>
+    </session-factory>
+</hibernate-configuration>
         ...
 ```
 
-###Create hibernate config to all entities:
-[Role.hbm.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/com/itibo/spring/persistence/Role.hbm.xml#L4-L20)
-```xml
-        ...
-        <property name="code" type="string">
-            <column name="CODE" length="60" not-null="true" unique="true"/>
-        </property>
-        <property name="label" type="string">
-            <column name="LABEL" length="100" not-null="true"/>
-        </property>
-        ...
-```
-
-###Add hibernate mapping to all configs:
-[hibernate.cfg.xml](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/resources/hibernate.cfg.xml#L5-L10)
-```xml
-                  ...
-        <hibernate-configuration>
-            <session-factory>
-                <mapping resource="com/itibo/spring/persistence/User.hbm.xml"/>
-                <mapping resource="com/itibo/spring/persistence/Role.hbm.xml"/>
-            </session-factory>
-        </hibernate-configuration>
-                  ...
-```
-
-###Add persistance classes:
-[persistence](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/java/com/itibo/spring/persistence/Role.java#L7-L11)
+###Add needded model:
+[model](https://github.com/UnionOne/JSFSHSecurity/tree/master/src/main/java/com/itibo/model)
 ```java
 ...
-public class Role {
-    private int roleId;
-    private String code;
-    private String label;
-    private User user;
-...
-```
+@Entity
+@Table(name = "users")
+@ManagedBean(name = "userModel")
+public class User {
+    @Id
+    @GeneratedValue
+    private Integer id;
 
-###Add model classes:
-[model](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/java/com/itibo/spring/model/UserModel.java#L7-L10)
-```java
-...
-public class UserModel {
     private String login;
-    private String pwd;
-    private String pwdConfirm;
+
+    private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+    )
+    private Role role;
 ...
 ```
 
-###Add DAO Controller and Manger classes:
-[DAO](https://github.com/UnionOne/JSFSHSecurity/blob/master/src/main/java/com/itibo/spring/dao/UserDAO.java#L18-L27)
+###Add DAO:
+[DAO](https://github.com/UnionOne/JSFSHSecurity/tree/master/src/main/java/com/itibo/dao)
 ```java
 ...
-@SuppressWarnings("ALL")
-@Named
-@Transactional("transactionManager")
-public class UserDAO {
-    @Inject
+@Repository
+@SuppressWarnings("unchecked")
+public class UserDAOImpl implements UserDAO {
+    @Autowired
     private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public void addUser(User user) {
+        Session session = this.sessionFactory.getCurrentSession();
+        user.setRole(new Role("user"));
+        session.persist(user);
+    }
+...
+```
+
+###Add Service:
+[Service](https://github.com/UnionOne/JSFSHSecurity/tree/master/src/main/java/com/itibo/service)
+```java
+...
+@Repository
+@SuppressWarnings("unchecked")
+public class UserDAOImpl implements UserDAO {
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public void addUser(User user) {
+        Session session = this.sessionFactory.getCurrentSession();
+        user.setRole(new Role("user"));
+        session.persist(user);
+    }
+...
+```
+
+###Add custom <authentication-provider>:
+[CustomUserDetailsService.java](https://github.com/UnionOne/JSFSHSecurity/tree/master/src/main/java/com/itibo/service)
+```java
+...
+@Service
+@Transactional
+public class CustomUserDetailsService implements UserDetailsService {
+    @Autowired
+    private UserDAO userDAO;
+
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        com.itibo.model.User domainUser = userDAO.getUserByLogin(login);
+
+        return new User(
+                domainUser.getLogin(),
+                domainUser.getPassword(),
+                true, true, true, true,
+                getAuthorities(domainUser.getRole().getId())
+        );
     }
 ...
 ```
