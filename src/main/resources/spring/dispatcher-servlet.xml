@@ -15,11 +15,37 @@
 
     <mvc:resources mapping="resources/**" location="/resources/" />
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-        <property name="cache" value="false" />
-        <property name="viewClass" value="com.itibo.jsf.view.FaceletView" />
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/pages/" />
         <property name="suffix" value=".xhtml" />
+    </bean>
+
+    <bean id="urlViewController"
+          class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
+    </bean>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <value>
+                /**/*.html=urlViewController
+            </value>
+        </property>
+    </bean>
+
+    <bean id="urlViewControllerWithPrefixAndSuffix"
+          class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
+        <property name="prefix" value="/dev/test_"/>
+        <property name="suffix" value="_beta"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <value>
+                /**/*.html=urlViewController
+                /dev/*.html=urlViewControllerWithPrefixAndSuffix
+            </value>
+        </property>
     </bean>
 
 </beans>

@@ -7,8 +7,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SpringSecurityHelloController {
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView indexPage(){
+    @RequestMapping(value = "/login.xhtml", method = RequestMethod.GET)
+    public ModelAndView loginPage(){
         return new ModelAndView("login");
+    }
+
+    @RequestMapping(value = "/admin.xhtml", method = RequestMethod.GET)
+    public ModelAndView adminPage(){
+        return new ModelAndView("admin");
     }
 }
