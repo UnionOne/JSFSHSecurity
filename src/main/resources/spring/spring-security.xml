@@ -10,7 +10,7 @@
         <intercept-url pattern="/pages/admin.xhtml" access="ROLE_ADMIN"/>
         <form-login login-page="/pages/login.xhtml"
                     default-target-url="/pages/admin.xhtml"
-                    authentication-failure-url="/pages/login.xhtml?error"/>
+                    authentication-failure-url="/pages/login.xhtml?auth=fail"/>
         <logout logout-success-url="/pages/login.xhtml"/>
     </http>
 
