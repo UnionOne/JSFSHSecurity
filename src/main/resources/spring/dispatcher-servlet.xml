@@ -1,51 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:p="http://www.springframework.org/schema/p"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:faces="http://www.springframework.org/schema/faces"
+             xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/faces http://www.springframework.org/schema/faces/spring-faces.xsd">
 
-    <mvc:annotation-driven/>
+    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+    <beans:import resource="webflow.xml"/>
 
-    <mvc:resources mapping="resources/**" location="/resources/" />
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <annotation-driven/>
+
+    <!-- Handles HTTP GET requests for /resources/** ${webappRoot}/resources directory -->
+    <resources mapping="/resources/**" location="/resources/"/>
+
+    <!-- Enable processing of JSF 2 resource requests -->
+    <faces:resources/>
 
 
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/pages/" />
-        <property name="suffix" value=".xhtml" />
-    </bean>
+    <!-- Maps request paths to flows in the flowRegistry -->
+    <beans:bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+        <beans:property name="flowRegistry" ref="flowRegistry"/>
+    </beans:bean>
 
-    <bean id="urlViewController"
-          class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
-    </bean>
+    <!--
+        Resolves views selected for rendering by @Controllers to .xhtml
+        resources in the /WEB-INF/ directory
+    -->
+    <beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.faces.mvc.JsfView"/>
+        <beans:property name="prefix" value="/pages/"/>
+        <beans:property name="suffix" value=".xhtml"/>
+    </beans:bean>
 
-    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="mappings">
-            <value>
-                /**/*.html=urlViewController
-            </value>
-        </property>
-    </bean>
+    <!-- Dispatches requests mapped to flows to FlowHandler implementations -->
+    <beans:bean class="org.springframework.faces.webflow.JsfFlowHandlerAdapter">
+        <beans:property name="flowExecutor" ref="flowExecutor"/>
+    </beans:bean>
 
-    <bean id="urlViewControllerWithPrefixAndSuffix"
-          class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
-        <property name="prefix" value="/dev/test_"/>
-        <property name="suffix" value="_beta"/>
-    </bean>
+    <!-- Message Source -->
+    <beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource"
+                p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application" p:fallbackToSystemLocale="false"/>
 
-    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="mappings">
-            <value>
-                /**/*.html=urlViewController
-                /dev/*.html=urlViewControllerWithPrefixAndSuffix
-            </value>
-        </property>
-    </bean>
-
-</beans>
+</beans:beans>

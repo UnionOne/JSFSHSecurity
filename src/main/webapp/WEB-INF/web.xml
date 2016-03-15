@@ -11,6 +11,7 @@
         <param-value>Development</param-value>
     </context-param>
 
+    <!-- Just here so the JSF implementation can initialize, *not* used at runtime -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -19,17 +20,16 @@
 
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.jsf</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
-        <url-pattern>/faces/*</url-pattern>
-        <url-pattern>*.faces</url-pattern>
     </servlet-mapping>
 
+    <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring/spring-security.xml classpath:spring/spring-hibernate.xml</param-value>
     </context-param>
 
+    <!-- Creates the Spring Container shared by all Servlets and Filters -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -46,6 +46,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- Processes application requests -->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

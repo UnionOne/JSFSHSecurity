@@ -35,6 +35,7 @@
     <properties>
         <spring.version>4.0.3.RELEASE</spring.version>
         <spring.security.version>3.2.5.RELEASE</spring.security.version>
+        <webflow-version>2.4.1.RELEASE</webflow-version>
         <hibernate.version>4.3.5.Final</hibernate.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -85,6 +86,23 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <!-- Spring Web Flow -->
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-faces</artifactId>
+            <version>${webflow-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-js</artifactId>
+            <version>${webflow-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-webflow</artifactId>
+            <version>${webflow-version}</version>
         </dependency>
 
         <!-- Hibernate -->
